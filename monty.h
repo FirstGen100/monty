@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <sys/types.h>
+#include <unistd.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -41,10 +43,11 @@ typedef struct var
 {
 	int temp;
 	char check;
-}var_t;
+} var_t;
 extern var_t variables;
 var_t variables;
 /* operation functions */
+ssize_t getline(char **lineptr, size_t *n, FILE *stream);
 void get_tokens(char *input, stack_t **stack, unsigned int count);
 int is_num(char *input);
 void find_operation(char *token, stack_t **stack, unsigned int count);
