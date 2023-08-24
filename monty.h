@@ -1,5 +1,9 @@
 #ifndef MONTY_H
 #define MONTY_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -25,10 +29,30 @@ typedef struct stack_s
  */
 typedef struct instruction_s
 {
-	        char *opcode;
-		        void (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+/**
+ * struct var - temporary variable and check
+ * @temp: temporary variable
+ * @check: check for var
+ */
+typedef struct var
+{
+	int temp;
+	char check;
+}var_t;
+extern var_t variables;
+var_t variables;
 /* operation functions */
-char *get_tokens(char *input, stack_t stack, unsigned int count);
+void get_tokens(char *input, stack_t **stack, unsigned int count);
+int is_num(char *input);
+void find_operation(char *token, stack_t **stack, unsigned int count);
+void free_stack(stack_t **stack, unsigned int count);
+/* stack fuctions */
+void push(stack_t **stack, unsigned int count);
+void pall(stack_t **stack, unsigned int count);
+void pop(stack_t **stack, unsigned int count);
+
 #endif /* MONTY_H */
 
