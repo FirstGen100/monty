@@ -47,7 +47,8 @@ typedef struct var
 extern var_t variables;
 var_t variables;
 /* operation functions */
-ssize_t getline(char **lineptr, size_t *n, FILE *stream);
+
+/* ssize_t getline(char **lineptr, size_t *n, FILE *stream);*/
 void get_tokens(char *input, stack_t **stack, unsigned int count);
 int is_num(char *input);
 void find_operation(char *token, stack_t **stack, unsigned int count);
