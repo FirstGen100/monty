@@ -50,6 +50,7 @@ typedef struct var
 	char *check;
 } var_t;
 extern var_t *variables;
+var_t *variables;
 /* operation functions */
 char *read_file(int fp);
 void check_push(int tokenlen, char *token, stack_t *stack, int count);
