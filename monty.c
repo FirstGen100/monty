@@ -1,5 +1,5 @@
 #include "monty.h"
-var_t *variables = NULL;
+
 /**
  * main - start of the programme
  * @argc: argument count
@@ -60,7 +60,6 @@ int execute(char *input, stack_t **stack)
 		{"push", push}, {"pall", pall}, {"pop", pop},
 		{"nop", nop}, {NULL, NULL},
 	};
-
 	for (tokenlen = 0; input[tokenlen] == '\n'; tokenlen++)
 		lnum++;
 	tok = strtok(input, "\n");
@@ -91,8 +90,8 @@ int execute(char *input, stack_t **stack)
 		}
 		if (inst[j].opcode == NULL && !flag && *(variables->check))
 			free_exit_i(*stack, num + lnum, "L%u: unknown instruction %s\n");
-		lnum += num_count(tok), tok = strtok(NULL, "\n"), variables->i_temp = 0, num++, flag = 0;
-	       	free(variables->check);
+		lnum += num_count(tok), tok = strtok(NULL, "\n"), variables->i_temp = 0;
+		num++, flag = 0, free(variables->check);
 	}
 	return (num + lnum);
 }
