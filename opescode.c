@@ -8,10 +8,9 @@
 void push(stack_t **stack, unsigned int count)
 {
 	stack_t *new_node;
-
 	(void)count;
-	new_node = malloc(sizeof(stack_t));
 
+	new_node = malloc(sizeof(stack_t));
 	if (!new_node)
 	{
 		fprintf(stderr, "Error: malloc failed.\n");
@@ -63,6 +62,8 @@ void pop(stack_t **stack, unsigned int count)
 {
 	if (stack == NULL || *stack == NULL)
 	{
+		free(variables->temp);
+		free(variables->check);
 		free(variables);
 		fprintf(stderr, "L%u: Can't pop empty stsck\n", count);
 		exit(EXIT_FAILURE);
