@@ -7,7 +7,7 @@
  *count: counter var
  * Return: no return
  */
-void _nop(stack_t **doubly, unsigned int count)
+void nop(stack_t **doubly, unsigned int count)
 {
 	(void)doubly;
 	(void)count;

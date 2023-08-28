@@ -9,22 +9,20 @@ void push(stack_t **stack, unsigned int count)
 {
 	stack_t *new_node;
 
-	if (stack == NULL)
-	{
-		fprintf(stderr, "L%d: unknown  stack\n", count);
-		exit(EXIT_FAILURE);
-	}
+	(void)count;
 	new_node = malloc(sizeof(stack_t));
-	if (new_node == NULL)
+
+	if (!new_node)
 	{
-		fprintf(stderr, "Error: memory allocation failure\n");
-		free_stack(stack, count);
+		fprintf(stderr, "Error: malloc failed.\n");
+		free_stack(*stack);
+		free(variables->temp);
 		exit(EXIT_FAILURE);
 	}
-	new_node->n = temp;
+	new_node->n = variables->i_temp;
 	new_node->prev = NULL;
 	new_node->next = *stack;
-	if (*stack != NULL)
+	if (*stack)
 		(*stack)->prev = new_node;
 	*stack = new_node;
 }
@@ -36,15 +34,24 @@ void push(stack_t **stack, unsigned int count)
  */
 void pall(stack_t **stack, unsigned int count)
 {
-	stack_t *temp;
 	(void)count;
 
-	temp = *stack;
-	while (temp != NULL)
-	{
-		printf("%d\n", temp->n);
-		temp = temp->next;
-	}
+	print_stack(*stack);
+}
+/**
+ * print_stack - prints the stack as a doubly linked list
+ * @h: pointer to start of stack
+ * Return: number of nodes
+ */
+size_t print_stack(const stack_t *h)
+{
+	int i;
+
+	if (h == NULL)
+		return (0);
+	for (i = 0; h; i++, h = h->next)
+		printf("%d\n", h->n);
+	return (i);
 }
 /**
  * pop - remove item from top of stack
@@ -56,14 +63,13 @@ void pop(stack_t **stack, unsigned int count)
 {
 	if (stack == NULL || *stack == NULL)
 	{
-		count++;
-		fprintf(stderr, "L%d: can't pop an empty stack\n", count);
+		free(variables);
+		fprintf(stderr, "L%u: Can't pop empty stsck\n", count);
 		exit(EXIT_FAILURE);
 	}
-	if ((*stack)->next != NULL)
+	if ((*stack)->next)
 	{
 		*stack = (*stack)->next;
-		temp = (*stack)->n;
 		free((*stack)->prev);
 		(*stack)->prev = NULL;
 	}
@@ -73,3 +79,4 @@ void pop(stack_t **stack, unsigned int count)
 		*stack = NULL;
 	}
 }
+
