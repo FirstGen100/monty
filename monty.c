@@ -43,50 +43,8 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	close(fp);
-	free_stack(stack);
-	free(variables->temp);
-	free(variables);
+	free_stack(stack), free(variables->temp), free(variables);
 	return (0);
-}
-/**
- * read_file - read contents of a file
- * @fp: file
- * Return: pointer to buffer store
- */
-char *read_file(int fp)
-{
-	int buffer_size = 64;
-	int dir;
-	char *ret, *temp;
-
-	ret = malloc(sizeof(char) * buffer_size);
-	if (ret == NULL)
-		return (NULL);
-	ret = memset(ret, 0, buffer_size);
-	dir = read(fp, ret, buffer_size);
-	if (dir == -1)
-	{
-		free(ret);
-		return (NULL);
-	}
-	while (dir == buffer_size)
-	{
-		buffer_size += buffer_size;
-		temp = malloc(sizeof(char) * buffer_size);
-		if (temp == NULL)
-		{
-			free(ret);
-			return (NULL);
-		}
-		temp = memset(temp, 0, buffer_size);
-		strncpy(temp, ret, (buffer_size / 2));
-		free(ret);
-		ret = temp;
-		dir += read(fp, ret + buffer_size / 2, buffer_size / 2);
-		if (dir == -1)
-			return (NULL);
-	}
-	return (ret);
 }
 /**
  * execute - executes the commands given
@@ -99,11 +57,8 @@ int execute(char *input, stack_t **stack)
 	unsigned int token = 0, i, j = 0, num = 1, flag = 0, lnum = 0, tokenlen = 0;
 	char *tok;
 	instruction_t inst[] = {
-		{"push", push},
-		{"pall", pall},
-		{"pop", pop},
-		{"nop", nop},
-		{NULL, NULL},
+		{"push", push}, {"pall", pall}, {"pop", pop},
+		{"nop", nop}, {NULL, NULL},
 	};
 
 	for (tokenlen = 0; input[tokenlen] == '\n'; tokenlen++)
@@ -136,8 +91,8 @@ int execute(char *input, stack_t **stack)
 		}
 		if (inst[j].opcode == NULL && !flag && *(variables->check))
 			free_exit_i(*stack, num + lnum, "L%u: unknown instruction %s\n");
-		lnum += num_count(tok), tok = strtok(NULL, "\n"), variables->i_temp = 0;
-		num++, flag = 0, free(variables->check);
+		lnum += num_count(tok), tok = strtok(NULL, "\n"), variables->i_temp = 0, num++, flag = 0;
+	       	free(variables->check);
 	}
 	return (num + lnum);
 }
@@ -189,22 +144,5 @@ int num_count(char *tok)
 	for (i = 1; tok[tokenlen + i] == '\n'; i++)
 		lnum++;
 	return (lnum);
-}
-/**
- * free_stack - free the stack
- * @stack: pointer to the stack
- * Return: void
- */
-void free_stack(stack_t *stack)
-{
-	if (stack == NULL)
-		return;
-	for (; stack->next; stack = stack->next)
-	{
-		if (stack->prev)
-			free(stack->prev);
-	}
-	free(stack->prev);
-	free(stack);
 }
 

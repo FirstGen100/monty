@@ -79,4 +79,21 @@ void pop(stack_t **stack, unsigned int count)
 		*stack = NULL;
 	}
 }
+/**
+ * free_stack - free the stack
+ * @stack: pointer to the stack
+ * Return: void
+ */
+void free_stack(stack_t *stack)
+{
+	if (stack == NULL)
+		return;
+	for (; stack->next; stack = stack->next)
+	{
+		if (stack->prev)
+			free(stack->prev);
+	}
+	free(stack->prev);
+	free(stack);
+}
 

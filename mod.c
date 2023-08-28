@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * stk_sub - subtracts the top element of stack from the second element
+ * sub - subtracts the top element of stack from the second element
  * @stack: head to the st
  * *@line_number:file line execution
  */
@@ -27,7 +27,7 @@ void sub(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * stk_div - divides the second top element of stack from the top element
+ *_div - divides the second top element of stack from the top element
  * @stack: head to the stack
  *@line_number:file line execution
  */
@@ -59,7 +59,7 @@ void _div(stack_t **stack, unsigned int line_number)
 }
 
 /**
- * stk_mul - multiplies the top two elements of the stack
+ * mul - multiplies the top two elements of the stack
  * @stack: head to the stack
  * @line_number: file line execution
  */
@@ -77,7 +77,7 @@ void mul(stack_t **stack, unsigned int line_number)
 	pop(stack, line_number);
 }
 /**
- * stk_mod - divides second top element by top element and gets remainder
+ * mod - divides second top element by top element and gets remainder
  * @stack: head to the stack
  * @line_number:file line execution
  */

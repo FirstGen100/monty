@@ -1,5 +1,45 @@
 #include "monty.h"
 /**
+ * read_file - read contents of a file
+ * @fp: file
+ * Return: pointer to buffer store
+ */
+char *read_file(int fp)
+{
+	int buffer_size = 64;
+	int dir;
+	char *ret, *temp;
+
+	ret = malloc(sizeof(char) * buffer_size);
+	if (ret == NULL)
+		return (NULL);
+	ret = memset(ret, 0, buffer_size);
+	dir = read(fp, ret, buffer_size);
+	if (dir == -1)
+	{
+		free(ret);
+		return (NULL);
+	}
+	while (dir == buffer_size)
+	{
+		buffer_size += buffer_size;
+		temp = malloc(sizeof(char) * buffer_size);
+		if (temp == NULL)
+		{
+			free(ret);
+			return (NULL);
+		}
+		temp = memset(temp, 0, buffer_size);
+		strncpy(temp, ret, (buffer_size / 2));
+		free(ret);
+		ret = temp;
+		dir += read(fp, ret + buffer_size / 2, buffer_size / 2);
+		if (dir == -1)
+			return (NULL);
+	}
+	return (ret);
+}
+/**
  * check_op - initialise to operations pointer
  * @tok: pointer to start
  * @tok_o: lenght of token - number of spaces
